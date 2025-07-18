@@ -759,9 +759,7 @@ h4 {
 }
 
 /* Monthly Calendar Styles (Refined) */
-.calendar-month-view {
-  /* No changes needed here, styles are inherited or handled by parent */
-}
+
 
 .calendar-header {
   display: flex;
