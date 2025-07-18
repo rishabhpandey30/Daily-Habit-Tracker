@@ -32,7 +32,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif; /* Using a modern sans-serif font */
+  font-family: "Inter", sans-serif; /* Using a modern sans-serif font */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-light);
@@ -55,16 +55,29 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-dark);
   margin-bottom: 15px;
   font-weight: 600;
 }
 
-h1 { font-size: 2.5em; }
-h2 { font-size: 2em; }
-h3 { font-size: 1.75em; }
-h4 { font-size: 1.5em; }
+h1 {
+  font-size: 2.5em;
+}
+h2 {
+  font-size: 2em;
+}
+h3 {
+  font-size: 1.75em;
+}
+h4 {
+  font-size: 1.5em;
+}
 
 /* Buttons */
 .btn {
@@ -261,7 +274,8 @@ h4 { font-size: 1.5em; }
   min-height: 100vh;
 }
 
-.dashboard-grid-container { /* Main grid for dashboard content */
+.dashboard-grid-container {
+  /* Main grid for dashboard content */
   display: grid;
   grid-template-columns: 1fr; /* Default: single column for mobile */
   gap: 25px; /* Gap between grid items */
@@ -269,7 +283,8 @@ h4 { font-size: 1.5em; }
   padding-bottom: 30px;
 }
 
-@media (min-width: 992px) { /* Desktop layout: two columns */
+@media (min-width: 992px) {
+  /* Desktop layout: two columns */
   .dashboard-grid-container {
     grid-template-columns: 1fr; /* Dashboard is now single column */
     grid-template-areas:
@@ -278,12 +293,14 @@ h4 { font-size: 1.5em; }
   }
 }
 
-.dashboard-span-full { /* Class for elements that span full width in the grid */
+.dashboard-span-full {
+  /* Class for elements that span full width in the grid */
   grid-column: 1 / -1; /* Spans all columns */
   grid-area: welcome; /* Assign to welcome area */
 }
 
-.dashboard-full-width-content { /* New class for content that takes full width */
+.dashboard-full-width-content {
+  /* New class for content that takes full width */
   grid-area: full-content;
   display: flex;
   flex-direction: column;
@@ -404,7 +421,6 @@ h4 { font-size: 1.5em; }
   margin-top: 5px;
   font-weight: 600;
 }
-
 
 /* Habit Form */
 .habit-form-card {
@@ -539,8 +555,14 @@ h4 { font-size: 1.5em; }
 }
 
 /* Profile Page Specific Styles */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .profile-page .header {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color); /* Changed header color for profile page */
 }
 
 .profile-page .header h1 {
@@ -559,7 +581,7 @@ h4 { font-size: 1.5em; }
 
 .profile-content {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr; /* Default: stack on small screens */
   gap: 30px;
   padding-top: 40px;
   padding-bottom: 40px;
@@ -567,11 +589,20 @@ h4 { font-size: 1.5em; }
 
 @media (min-width: 768px) {
   .profile-content {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* Two columns for info and stats */
+    grid-template-areas: "info stats"; /* Info and stats side-by-side */
+  }
+}
+
+@media (min-width: 992px) {
+  .profile-content {
+    grid-template-columns: 1fr 1fr; /* Keep two columns, info and stats */
+    grid-template-areas: "info stats"; /* Still info and stats side-by-side */
   }
 }
 
 .profile-info-card {
+  grid-area: info;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -591,13 +622,74 @@ h4 { font-size: 1.5em; }
 }
 
 .profile-form-card {
+  /* This class is no longer used but kept for reference */
+  grid-area: form;
   padding: 30px;
 }
 
 .profile-form-card h3 {
+  /* This class is no longer used but kept for reference */
   text-align: center;
   margin-bottom: 25px;
   color: var(--text-dark);
+}
+
+/* New: Profile Stats Grid */
+.profile-stats-grid {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 1fr; /* Stack on small screens */
+  gap: 20px;
+  margin-top: 10px; /* Add some space from the above sections */
+}
+
+@media (min-width: 768px) {
+  .profile-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+  }
+}
+
+.profile-stat-card {
+  padding: var(--card-padding-small);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px; /* Ensure consistent height */
+}
+
+.profile-stat-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.4em;
+}
+
+.profile-stat-card .stat-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-stat-card .stat-number {
+  font-size: 2.8em;
+  font-weight: 700;
+  color: var(--primary-dark);
+  line-height: 1;
+}
+
+.profile-stat-card .stat-label {
+  font-size: 0.9em;
+  color: var(--text-light);
+  margin-top: 5px;
+}
+
+.profile-stat-card .summary-message {
+  font-size: 0.85em;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 5px;
 }
 
 /* Calendar Page Container (now Progress & Calendar Page) */
@@ -615,7 +707,8 @@ h4 { font-size: 1.5em; }
   padding-bottom: 30px;
 }
 
-@media (min-width: 992px) { /* Desktop layout: two columns for stats and calendar */
+@media (min-width: 992px) {
+  /* Desktop layout: two columns for stats and calendar */
   .progress-calendar-grid-container {
     grid-template-columns: 1fr 2fr; /* Stats on left, Calendar on right */
     grid-template-areas:
@@ -632,20 +725,23 @@ h4 { font-size: 1.5em; }
   text-align: center;
 }
 
-.progress-calendar-stats-grid { /* Nested grid for side-by-side stats */
+.progress-calendar-stats-grid {
+  /* Nested grid for side-by-side stats */
   grid-area: stats;
   display: grid;
   grid-template-columns: 1fr; /* Stack on small screens */
   gap: 20px;
 }
 
-@media (min-width: 768px) { /* Side-by-side on medium screens and up */
+@media (min-width: 768px) {
+  /* Side-by-side on medium screens and up */
   .progress-calendar-stats-grid {
     grid-template-columns: 1fr 1fr; /* Two equal columns for stats */
   }
 }
 
-@media (min-width: 992px) { /* Stack stats again when in left column of main grid */
+@media (min-width: 992px) {
+  /* Stack stats again when in left column of main grid */
   .progress-calendar-stats-grid {
     grid-template-columns: 1fr;
   }
@@ -662,6 +758,10 @@ h4 { font-size: 1.5em; }
   justify-self: center; /* Center the calendar card in its grid area */
 }
 
+/* Monthly Calendar Styles (Refined) */
+.calendar-month-view {
+  /* No changes needed here, styles are inherited or handled by parent */
+}
 
 .calendar-header {
   display: flex;

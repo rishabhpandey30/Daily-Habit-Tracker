@@ -1,101 +1,114 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const MonthlyCalendar = ({ selectedDate, onDateChange, habits }) => {
-  const currentMonth = selectedDate.getMonth();
-  const currentYear = selectedDate.getFullYear();
+const MonthlyCalendar = ({ habits, selectedDate, onDateSelect }) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1));
 
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-  const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
-  const numDaysInMonth = lastDayOfMonth.getDate();
+  useEffect(() => {
+    // Update currentMonth if selectedDate changes to a different month
+    if (selectedDate.getMonth() !== currentMonth.getMonth() || selectedDate.getFullYear() !== currentMonth.getFullYear()) {
+      setCurrentMonth(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)); // Corrected: used selectedDate.getMonth()
+    }
+  }, [selectedDate, currentMonth]);
 
-  const startDayOfWeek = firstDayOfMonth.getDay(); // 0 for Sunday, 1 for Monday, etc.
+  const getDaysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const numDays = lastDay.getDate();
 
-  const days = [];
+    const days = [];
+    for (let i = 1; i <= numDays; i++) {
+      days.push(new Date(year, month, i));
+    }
+    return days;
+  };
 
-  // Add empty cells for days before the 1st of the month
-  for (let i = 0; i < startDayOfWeek; i++) {
-    days.push({ type: 'empty' });
-  }
+  const getStartDayOfWeek = (date) => {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    return firstDayOfMonth.getDay(); // 0 for Sunday, 1 for Monday, etc.
+  };
 
-  // Add days of the month
-  for (let i = 1; i <= numDaysInMonth; i++) {
-    const date = new Date(currentYear, currentMonth, i);
-    date.setHours(0, 0, 0, 0); // Normalize to start of day
+  const daysInMonth = getDaysInMonth(currentMonth);
+  const startDayOfWeek = getStartDayOfWeek(currentMonth);
 
+  const prevMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+  };
+
+  const nextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+  };
+
+  const goToToday = () => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    onDateSelect(today); // Select today's date
+    setCurrentMonth(new Date(today.getFullYear(), today.getMonth(), 1)); // Set calendar to today's month
+  };
 
-    const isToday = date.getTime() === today.getTime();
-    const isSelected = date.getTime() === selectedDate.getTime();
+  const isSameDay = (date1, date2) => {
+    return date1.getFullYear() === date2.getFullYear() &&
+           date1.getMonth() === date2.getMonth() &&
+           date1.getDate() === date2.getDate();
+  };
 
-    // Check if any habit was completed on this specific date
-    const hasCompletion = habits.some(habit =>
-      habit.completions.some(completionDate => {
-        const compDate = new Date(completionDate);
+  const hasCompletion = (date) => {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+    return habits.some(habit =>
+      habit.completions.some(completionDateStr => {
+        const compDate = new Date(completionDateStr);
         compDate.setHours(0, 0, 0, 0);
-        return compDate.getTime() === date.getTime();
+        return isSameDay(normalizedDate, compDate);
       })
     );
-
-    days.push({
-      type: 'day',
-      date: date,
-      dayNumber: i,
-      isToday,
-      isSelected,
-      hasCompletion,
-    });
-  }
-
-  const handlePrevMonth = () => {
-    const newDate = new Date(selectedDate);
-    newDate.setMonth(newDate.getMonth() - 1);
-    onDateChange(newDate);
   };
-
-  const handleNextMonth = () => {
-    const newDate = new Date(selectedDate);
-    newDate.setMonth(newDate.getMonth() + 1);
-    onDateChange(newDate);
-  };
-
-  const handleGoToToday = () => {
-    onDateChange(new Date()); // Set selected date to today
-  };
-
-  const monthName = selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   return (
     <div className="calendar-month-view">
       <div className="calendar-header">
-        <button onClick={handlePrevMonth} className="calendar-nav-btn">&lt;</button>
-        <h3>{monthName}</h3>
-        <button onClick={handleNextMonth} className="calendar-nav-btn">&gt;</button>
+        <button onClick={prevMonth} className="calendar-nav-btn">&lt;</button>
+        <h3>{currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
+        <button onClick={nextMonth} className="calendar-nav-btn">&gt;</button>
       </div>
       <div className="calendar-controls">
-        <button onClick={handleGoToToday} className="btn btn-outline btn-today">Today</button>
+        <button onClick={goToToday} className="btn btn-outline btn-today">Today</button>
       </div>
       <div className="calendar-weekdays">
-        {weekdays.map((day, index) => (
-          <div key={index}>{day}</div>
-        ))}
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
       </div>
       <div className="calendar-grid">
-        {days.map((day, index) => (
-          <div
-            key={index}
-            className={`calendar-day-cell ${day.type === 'empty' ? 'empty' : ''} ${day.isToday ? 'today' : ''} ${day.isSelected ? 'selected' : ''} ${day.hasCompletion ? 'has-completion' : ''}`}
-            onClick={day.type === 'day' ? () => onDateChange(day.date) : null}
-          >
-            {day.type === 'day' && (
-              <>
-                <span className="day-number">{day.dayNumber}</span>
-                {day.hasCompletion && <div className="completion-indicator"></div>}
-              </>
-            )}
-          </div>
+        {Array.from({ length: startDayOfWeek }).map((_, index) => (
+          <div key={`empty-${index}`} className="calendar-day-cell empty"></div>
         ))}
+        {daysInMonth.map((day, index) => {
+          const today = new Date();
+          const isToday = isSameDay(day, today);
+          const isSelected = isSameDay(day, selectedDate);
+          const hasComp = hasCompletion(day);
+
+          let cellClasses = 'calendar-day-cell';
+          if (isToday) cellClasses += ' today';
+          if (isSelected) cellClasses += ' selected';
+          if (hasComp) cellClasses += ' has-completion';
+
+          return (
+            <div
+              key={index}
+              className={cellClasses}
+              onClick={() => onDateSelect(day)}
+            >
+              <span className="day-number">{day.getDate()}</span>
+              {hasComp && <div className="completion-indicator"></div>}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
