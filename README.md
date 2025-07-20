@@ -107,15 +107,6 @@ From the `frontend` directory:
 npm start # or yarn start
 ```
 The frontend application will open in your browser, usually at `http://localhost:3000`.
-
-## 🚀 Deployment
-
-This project is designed for deployment to cloud platforms.
-
-*   **Frontend (React.js):** Can be easily deployed to platforms like [Vercel](https://vercel.com/) or Netlify. Remember to set the `REACT_APP_BACKEND_URL` environment variable on your chosen platform to point to your deployed backend API.
-*   **Backend (Node.js/Express & MongoDB):** Can be deployed to a Platform as a Service (PaaS) like [Render](https://render.com/), [Railway](https://railway.app/), or Heroku. You will need to configure `MONGO_URI`, `JWT_SECRET`, and `FRONTEND_URL` environment variables on your backend hosting platform. MongoDB Atlas is recommended for cloud-hosted MongoDB.
-
 ---
 
 Feel free to contribute or suggest improvements!
-```
