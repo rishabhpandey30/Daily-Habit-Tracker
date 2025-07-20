@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register, login } from '../api';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const AuthForm = ({ type }) => {
   const [username, setUsername] = useState('');
@@ -8,7 +9,10 @@ const AuthForm = ({ type }) => {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // 'success' or 'error'
   const navigate = useNavigate();
-
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
@@ -53,15 +57,27 @@ const AuthForm = ({ type }) => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="form-group" style={{ height:"80px",position: "relative", width: "370px" }}>
           <label htmlFor="password">Password</label>
           <input
-            type="password"
+           type={showPassword ? "text" : "password"}
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+           <span
+        onClick={togglePassword}
+        style={{
+          position: "absolute",
+          right: "10px",
+          top: "58px",
+          transform: "translateY(-50%)",
+          cursor: "pointer"
+        }}
+      >
+       {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+      </span>
         </div>
         <button type="submit" className="btn">
           {type === 'register' ? 'Register' : 'Login'}
