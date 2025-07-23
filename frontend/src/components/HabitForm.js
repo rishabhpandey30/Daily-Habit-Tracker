@@ -62,6 +62,8 @@ const HabitForm = ({ onHabitAdded }) => {
           >
             <option value="any">Anytime</option>
             <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+              <option value="evening">Evening</option>
             <option value="night">Night</option>
           </select>
         </div>

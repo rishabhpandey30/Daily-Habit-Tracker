@@ -11,9 +11,9 @@ const HabitSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  timeOfDay: { // e.g., 'morning', 'night', 'any'
+  timeOfDay: { // e.g., 'morning', 'afternoon', 'evening', 'night', 'any'
     type: String,
-    enum: ['morning', 'night', 'any'],
+    enum: ['morning', 'afternoon', 'evening', 'night', 'any'],
     default: 'any',
   },
   completions: [

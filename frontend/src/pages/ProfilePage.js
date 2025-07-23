@@ -192,7 +192,7 @@ const ProfilePage = () => {
         <nav>
           <ul>
             <li><Link to="/dashboard">Dashboard</Link></li>
-            <li><Link to="/progress-calendar">Progress & Calendar</Link></li>
+            <li><Link to="/progress-calendar">Progress</Link></li>
             <li><button onClick={handleLogout} className="btn btn-outline">Logout</button></li>
           </ul>
         </nav>

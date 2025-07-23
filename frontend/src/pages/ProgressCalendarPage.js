@@ -124,7 +124,7 @@ const ProgressCalendarPage = () => {
         </nav>
       </header>
       <div className="container progress-calendar-grid-container">
-        <h2 className="page-title">Your Progress & Calendar</h2>
+        <h2 className="page-title">Your Progress</h2>
 
         {/* Progress and Streak Cards */}
         <div className="progress-calendar-stats-grid">

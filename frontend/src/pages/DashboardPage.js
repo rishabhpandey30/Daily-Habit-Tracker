@@ -84,7 +84,7 @@ const DashboardPage = () => {
         <h1>Daily Habit Tracker</h1>
         <nav>
           <ul>
-            <li><Link to="/progress-calendar">Progress & Calendar</Link></li> {/* Updated link */}
+            <li><Link to="/progress-calendar">Progress</Link></li> {/* Updated link */}
             <li><Link to="/profile">Profile</Link></li>
             <li><button onClick={handleLogout} className="btn btn-outline">Logout</button></li>
           </ul>
