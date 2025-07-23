@@ -217,7 +217,7 @@ const ProfilePage = () => {
           </div>
 
           <div className="card profile-stat-card">
-            <h3>Longest Current Streak</h3>
+            <h3>Current Streak</h3>
             <div className="stat-display">
               <span className="stat-number">{overallCurrentStreak}</span>
               <span className="stat-label">Days</span>

@@ -39,14 +39,14 @@ const API_URL = 'http://localhost:5000/api'|| process.env.REACT_APP_BACKEND_URL 
     };
 
     // New: Update user password
-    export const updatePassword = async (currentPassword, newPassword) => {
-    const response = await fetch(`${API_URL}/auth/password`, {
-        method: 'PUT',
-        headers: getAuthHeaders(),
-        body: JSON.stringify({ currentPassword, newPassword }),
-    });
-    return response.json();
-    };
+    // export const updatePassword = async (currentPassword, newPassword) => {
+    // const response = await fetch(`${API_URL}/auth/password`, {
+    //     method: 'PUT',
+    //     headers: getAuthHeaders(),
+    //     body: JSON.stringify({ currentPassword, newPassword }),
+    // });
+    // return response.json();
+    // };
 
     export const getHabits = async () => {
     const response = await fetch(`${API_URL}/habits`, {
