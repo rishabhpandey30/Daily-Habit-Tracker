@@ -18,6 +18,7 @@ app.use(cors({
     "https://habittrackerdev.vercel.app"   // your actual vercel frontend URL
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 })); // Allows cross-origin requests from frontend
 app.options("*", cors());
