@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000/api'|| process.env.REACT_APP_BACKEND_URL ;
+const API_URL = 'http://localhost:5000/api'|| 'https://daily-habit-tracker-w80e.onrender.com' ||process.env.REACT_APP_BACKEND_URL ;
 
     const getAuthHeaders = () => {
     const user = JSON.parse(localStorage.getItem('user'));
