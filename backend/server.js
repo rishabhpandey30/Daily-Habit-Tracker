@@ -17,8 +17,10 @@ app.use(cors({
     "http://localhost:3000",
     "https://habittrackerdev.vercel.app"   // your actual vercel frontend URL
   ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 })); // Allows cross-origin requests from frontend
+app.options("*", cors());
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
