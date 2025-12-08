@@ -94,6 +94,7 @@ const API_URL = 'https://daily-habit-tracker-w80e.onrender.com/api'  // || 'http
     const response = await fetch(`${API_URL}/habits/${id}/incomplete`, {
         method: 'POST',
         headers: getAuthHeaders(),
+        mode: "cors"
     });
     return response.json();
     };
