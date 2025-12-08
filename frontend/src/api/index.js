@@ -1,4 +1,4 @@
-const API_URL = 'https://daily-habit-tracker-w80e.onrender.com'  // || 'http://localhost:5000/api' ;
+const API_URL = 'https://daily-habit-tracker-w80e.onrender.com/api'  // || 'http://localhost:5000/api' ;
 
     const getAuthHeaders = () => {
     const user = JSON.parse(localStorage.getItem('user'));
