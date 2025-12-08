@@ -12,7 +12,13 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Middleware
-app.use(cors()); // Allows cross-origin requests from frontend
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://habittrackerdev.vercel.app"   // <- Replace with your actual Render frontend URL
+  ],
+  credentials: true
+})); // Allows cross-origin requests from frontend
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
